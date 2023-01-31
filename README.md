@@ -256,5 +256,5 @@ internal
 
 
 ## Alternatives
-* Another option is to follow the application structure and principles of one of the Go frameworks such as: [Revel](https://github.com/revel/revel), [Gin-Gonic](https://gin-gonic.github.io/gin/), etc.
+* Another option is to follow the application structure and principles of one of the Go frameworks such as: [Revel | full-stack web framework for Go](https://github.com/revel/revel) or [Gin-Gonic | HTTP web framework written in Go](https://github.com/gin-gonic/gin).
 
