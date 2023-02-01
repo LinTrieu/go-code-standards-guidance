@@ -8,7 +8,7 @@
 ## Abstract
 
 
-Previously, I prepared this document as an internal RFC for my previous engineering department. The RFC has been anonymised so that no company-specific information remains. The format of this document adheres to standard RFC style conventions with `MUST`, `SHOULD` imperatives. For further information on this, ironically there is an RFC on what is an RFC, found [here](https://www.rfc-editor.org/rfc/rfc7322).  
+Previously, I prepared this document as an internal RFC for my previous engineering department. The RFC has been anonymised such that no company-specific information remains. The format of this document adheres to standard RFC style conventions with `MUST` and `SHOULD` imperatives. For further information on this, there is an RFC on what is an RFC, found (unironically) [here](https://www.rfc-editor.org/rfc/rfc7322).  
 
 The intention of this document is to serve as a set of guiding principles for writing Go code and building domain-driven scalable applications. 
 
@@ -198,8 +198,8 @@ Go language constructs and widely adopted conventions for best practice
 
 * Middleware.go
    * This layer `MUST` provide abstracted code that is executed either on the Server before the request is passed onto the user’s application code, or on the client around the user call.
-   * We `SHOULD` use middleware to implement common patterns of generic functonality such as logging, retries, monitoring and tracing.
-   * We `MUST` use internal libraries that provide middleware services where possible, see [Backstage](https://backstage.paddle.dev/catalog) Go libraries.
+   * We `SHOULD` develop and use internal libraries and middleware that implement common re-usable patterns of generic functonality such as logging, retries, monitoring and tracing.
+  
 * Validator
    * This layer `MUST` provide validation within the handler, and validate the input/request before passing data to the service layer.
 
