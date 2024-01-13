@@ -8,7 +8,7 @@
 ## Abstract
 
 
-Previously, I prepared this document as an internal RFC for my previous engineering department. The RFC has been anonymised such that no company-specific information remains. The format of this document adheres to standard RFC style conventions with `MUST` and `SHOULD` imperatives. For further information on this, there is an RFC on what is an RFC, found (unironically) [here](https://www.rfc-editor.org/rfc/rfc7322).  
+I prepared this document as an internal RFC document for my previous engineering department. The RFC has been anonymized such that no company-specific information remains. The format of this document adheres to standard RFC style conventions with `MUST` and `SHOULD` imperatives. For further information on this, there is an RFC on what is an RFC, found (unironically) [here](https://www.rfc-editor.org/rfc/rfc7322).  
 
 The intention of this document is to serve as a set of guiding principles for writing Go code and building domain-driven scalable applications. 
 
@@ -16,7 +16,7 @@ The intention of this document is to serve as a set of guiding principles for wr
 ## Motivation
 
 
-The main objective of this document is to help developers follow the same set of common rules when writing Go code. It will specifically aim at standardising new Go services by introducing guidelines on application architecture and best practices in order to improve code quality and consistency.
+The main objective of this document is to help developers follow the same set of common rules when writing Go code. It will specifically aim at standardizing Go services by introducing guidelines on application architecture and best practices to improve code quality and consistency.
 
 
 This document will also help onboarding developers to understand how to contribute to Go repositories.
@@ -25,8 +25,8 @@ This document will also help onboarding developers to understand how to contribu
 ### Objectives:
 
 
-1. Consistency and standardisation in internal Go services
-2. Easy to understand, navigate and reason for any new developer coming to the application
+1. Consistency and standardization in internal Go services
+2. Easy to understand, navigate, and reason for any new developer coming to the application
 3. Easy to change, loosely-coupled
 4. Easy to test
 5. Structure should reflect how the software works
@@ -52,9 +52,9 @@ Go language constructs and widely adopted conventions for best practice
 ### Modules
 
 
-* We `MUST` organise our Go code in packages.
+* We `MUST` organize our Go code in packages.
 * We `MUST` name packages in lowercase convention e.g. ‘storedpaymentmethod’.
-* We `MUST` name packages in singular and avoid plural. e.g ‘paymentmethod’, not ‘paymentmethods’.
+* We `MUST` name packages in singular and avoid plural. e.g. ‘paymentmethod’, not ‘paymentmethods’.
 * We `MUST` name packages using short and representative names and  `MUST NOT` use meaningless, generic names such as`util`, `misc` or `common`. Other engineers should be able to identify the purpose of the package from its name.
 * We `SHOULD` name packages based on what it provides, not what it contains.
 * We `SHOULD` avoid package name collisions by using unique naming to differ from other internal packages or standard libraries.
@@ -69,7 +69,7 @@ Go language constructs and widely adopted conventions for best practice
 ### Interfaces
 
 
-* We `MUST` use interfaces to specify and define behaviour.
+* We `MUST` use interfaces to specify and define behavior.
 * Interfaces `SHOULD` be kept as small as possible so only methods required are defined. The bigger the interface, the weaker the abstraction.
 * We `MUST` name interface arguments within an interface definition
 * We `SHOULD` name one-method interfaces with its method name ending in an -er suffix, e.g. sourceGetter
@@ -97,9 +97,9 @@ Go language constructs and widely adopted conventions for best practice
    * `var i int` instead of `var index int`
 * We `SHOULD NOT` use redundant long names within their context. A name's length should not exceed its information content.
 * We `MUST` use a consistent variable declaration style throughout the application.
-* When declaring and initialising a variable to its zero value, we `SHOULD` use the `var` keyword.
+* When declaring and initializing a variable to its zero value, we `SHOULD` use the `var` keyword.
    * e.g. `var foo string`
-* When declaring and initialising a variable to a non-zero value, we `SHOULD` use the short variable declaration operator `:=`. 
+* When declaring and initializing a variable to a non-zero value, we `SHOULD` use the short variable declaration operator `:=`. 
    * e.g `foo := "bar"`
 
 
@@ -114,9 +114,9 @@ Go language constructs and widely adopted conventions for best practice
 
 
 ### Structs
-* We `SHOULD` use constructors over plain struct initialisation, particularly on 'struct layers' (NewHandler, NewRepository, NewService...).
+* We `SHOULD` use constructors over plain struct initialization, particularly on 'struct layers' (NewHandler, NewRepository, NewService...).
    * `h := NewHandler(foo)` instead of `h := Handler{foo}`.
-* We `MUST` name constructor functions using the pattern `New{StructName}`. For example a Service constructor should be named NewService.
+* We `MUST` name constructor functions using the pattern `New{StructName}`. For example, a Service constructor should be named NewService.
 
 
 
@@ -127,7 +127,7 @@ Go language constructs and widely adopted conventions for best practice
 ### Guiding Principles 
 
 
-* The application architecture `MUST` be loosely coupled with separation of concerns.
+* The application architecture `MUST` be loosely coupled with the separation of concerns.
 * The application architecture `MUST` abstract away implementation details and limit how code structures refer to each other, keeping related things within a boundary.
 * We `MUST` package the code in these groups and place them into distinct “layers”.
 * We `SHOULD` adhere to the dependency inversion principle in which outer layers (implementation details) can refer to inner layers (abstractions), but inner layers only depend on interfaces.
@@ -137,7 +137,7 @@ Go language constructs and widely adopted conventions for best practice
 ### Directories
 
 
-* `/cmd` - main application for the project. This directory contains the application entrypoint(s) that will get compiled into binary executable(s).
+* `/cmd` - main application for the project. This directory contains the application entry point (s) that will be compiled into a binary executable(s).
 * `/pkg` - library code that is open to use for external applications to import.
    * This includes generated Go code for gRPC as it contains both server and client code which is used by both the project it is in and external projects.
 * `/internal` - private application code, arranged in layers (detailed below).
@@ -189,7 +189,7 @@ Go language constructs and widely adopted conventions for best practice
 
 
 * This layer `MUST` represent a collection of data structure definitions and `MUST NOT` contain business-domain logic.
-* We `MUST` define and store models within its relevent package. We `SHOULD NOT` store models within a generic `models` package, in order to avoid coupling and circular referencing.
+* We `MUST` define and store models within its relevant package. We `SHOULD NOT` store models within a generic `models` package, in order to avoid coupling and circular referencing.
 * We `SHOULD` store generated presentation models (usually from gRPC) under `pkg/api/`.
 
 
@@ -198,7 +198,7 @@ Go language constructs and widely adopted conventions for best practice
 
 * Middleware.go
    * This layer `MUST` provide abstracted code that is executed either on the Server before the request is passed onto the user’s application code, or on the client around the user call.
-   * We `SHOULD` develop and use internal libraries and middleware that implement common re-usable patterns of generic functonality such as logging, retries, monitoring and tracing.
+   * We `SHOULD` develop and use internal libraries and middleware that implement common re-usable patterns of generic functionality such as logging, retries, monitoring, and tracing.
   
 * Validator
    * This layer `MUST` provide validation within the handler, and validate the input/request before passing data to the service layer.
@@ -243,18 +243,18 @@ internal
 ## Go Libraries
 
 
-* We `SHOULD` use standardised, established libraries instead of re-inventing the wheel where re-usable functionality has already been created.
-   * These cover areas such as, but not limited to: logging, SQL tooling, token authentication, AWS system management, and HTTP/gRPC Server routing. There are further internal libraries which should be referred to.
+* We `SHOULD` use standardized, established libraries instead of re-inventing the wheel where re-usable functionality has already been created.
+   * These cover areas such as, but not limited to: logging, SQL tooling, token authentication, AWS system management, and HTTP/gRPC Server routing. There are further internal libraries that should be referred to.
 * We `MUST` document and refer to these Go Services and Library dependencies, so that the internal or third-party functionality is used consistently across our application ecosystem.
 
 
 
 
 ## Drawbacks
-* This is just one approach to structuring a Go project. In the case of smaller application ecosystems, the cost-benefit overhead should be considered. In some cases another approach may also be more relevant depending on the specific project’s needs. However in this trade-off, we have opted to favour consistency and standardisation in our Go services, for motivations detailed under Section 2.
+* This is just one approach to structuring a Go project. In the case of smaller application ecosystems, the cost-benefit overhead should be considered. In some cases, another approach may also be more relevant depending on the specific project’s needs. However, in this trade-off, we have opted to favor consistency and standardization in our Go services, for motivations detailed under Section 2.
 * Where we diverge from the specificities of the RFC, we `MUST` still adhere to the RFC's Guiding Principles.
 
 
 ## Alternatives
-* Another option is to follow the application structure and principles of one of the Go frameworks such as: [Revel | full-stack web framework for Go](https://github.com/revel/revel) or [Gin-Gonic | HTTP web framework written in Go](https://github.com/gin-gonic/gin).
+* Another option is to follow the application structure and principles of one of the Go frameworks such as [Revel | full-stack web framework for Go](https://github.com/revel/revel) and [Gin-Gonic | HTTP web framework written in Go](https://github.com/gin-gonic/gin).
 
